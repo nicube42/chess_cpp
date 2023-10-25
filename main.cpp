@@ -1,7 +1,7 @@
 #include </opt/homebrew/Cellar/sfml/2.6.0/include/SFML/Graphics.hpp>
-#include "Board.hpp"
-#include "whiteSetup.hpp"
-#include "blackSetup.hpp"
+#include "Board/Board.hpp"
+#include "Players/whiteSetup.hpp"
+#include "Players/blackSetup.hpp"
 
 sf::Texture squareGrayLightTexture;
 sf::Texture squareGrayDarkTexture;
@@ -11,9 +11,14 @@ sf::Texture wRookTexture, wQueenTexture, wPawnTexture, wKnightTexture, wKingText
 sf::Sprite wRookSprite, wQueenSprite, wPawnSprite, wKnightSprite, wKingSprite, wBishopSprite;
 sf::Texture bRookTexture, bQueenTexture, bPawnTexture, bKnightTexture, bKingTexture, bBishopTexture;
 sf::Sprite bRookSprite, bQueenSprite, bPawnSprite, bKnightSprite, bKingSprite, bBishopSprite;
+sf::Texture logTexture;
+sf::Sprite logSprite;
 
 // Assumes 8x8 board and each tile is 64x64 pixels
 const int TILE_SIZE = 128;
+const int LOG_WIDTH = 600;
+sf::Font font;
+std::vector<std::string> logMessages;
 
 void resetAllSpritesToOriginalScale() {
     float scale_factor = TILE_SIZE / float(wRookSprite.getGlobalBounds().width);
@@ -52,10 +57,16 @@ void	setTextures()
 	// Load textures
 	squareGrayLightTexture.loadFromFile("/Users/nicolasdiamantis/Documents/Code/cpp/chess_cpp/PNGs/With Shadow/1024px/square gray light _png_shadow_1024px.png");
 	squareGrayDarkTexture.loadFromFile("/Users/nicolasdiamantis/Documents/Code/cpp/chess_cpp/PNGs/With Shadow/1024px/square gray dark _png_shadow_1024px.png");
+	// squareGrayLightTexture.loadFromFile("/Users/nicolasdiamantis/Documents/Code/cpp/chess_cpp/PNGs/initialD/white.png");
+	// squareGrayDarkTexture.loadFromFile("/Users/nicolasdiamantis/Documents/Code/cpp/chess_cpp/PNGs/initialD/black.png");
+
+	logTexture.loadFromFile("/Users/nicolasdiamantis/Documents/Code/cpp/chess_cpp/PNGs/initialD/log2.png");
 
 	// Set textures to sprites
 	squareGrayLightSprite.setTexture(squareGrayLightTexture);
 	squareGrayDarkSprite.setTexture(squareGrayDarkTexture);
+
+	logSprite.setTexture(logTexture);
 
 	// Load textures for chess pieces
     wRookTexture.loadFromFile("/Users/nicolasdiamantis/Documents/Code/cpp/chess_cpp/PNGs/With Shadow/1024px/w_rook_png_shadow_1024px.png");
@@ -116,6 +127,18 @@ void	setTextures()
 	bPawnSprite.setScale(scale_factor_l, scale_factor_l);
 }
 
+void drawLogMessages(sf::RenderWindow& window) {
+    int yOffset = 10;  // starting y-offset for the first log message
+
+    for (const auto& message : logMessages) {
+        sf::Text text(message, font);
+        text.setCharacterSize(20);
+        text.setFillColor(sf::Color::Black);
+        text.setPosition(8 * TILE_SIZE + 10, yOffset);
+        window.draw(text);
+        yOffset += 20;  // Increase the y-offset for the next message
+    }
+}
 
 void drawBoardAndPieces(sf::RenderWindow& window, Board* board) {
 
@@ -207,11 +230,34 @@ sf::Vector2i getBoardPositionFromMousePosition(int mouseX, int mouseY) {
     return sf::Vector2i(mouseX / TILE_SIZE, mouseY / TILE_SIZE);
 }
 
+void addLogMessage(const std::string& message)
+{
+    logMessages.push_back(message);
+    
+    // Optionally, limit the number of log messages to prevent indefinite growth
+    const size_t maxLogMessages = 50;  // Adjust this value as needed
+    while (logMessages.size() > maxLogMessages) {
+        logMessages.erase(logMessages.begin());
+    }
+}
+
+
 enum class Player { WHITE, BLACK };
 
+void drawLogBackground(sf::RenderWindow& window)
+{
+    logSprite.setPosition(8 * TILE_SIZE, 0);
+    window.draw(logSprite);
+}
+
 int main() {
+	// Load a font for the log messages
+    if (!font.loadFromFile("font/Roboto-Medium.ttf")) {
+        std::cerr << "Error loading font!" << std::endl;
+        return -1;
+    }
     const int TILE_SIZE = 128; // Assuming TILE_SIZE is 64, change this if it's different
-    sf::RenderWindow window(sf::VideoMode(8 * TILE_SIZE, 8 * TILE_SIZE), "SFML Chess");
+    sf::RenderWindow window(sf::VideoMode(8 * TILE_SIZE + LOG_WIDTH, 8 * TILE_SIZE + LOG_WIDTH), "SFML Chess");
 
     Board board;
     WhiteBoardSetup white(&board);
@@ -246,8 +292,23 @@ int main() {
 						}
 						else
 						{
-							if (selectedWhitePiece->move(boardPos.x, boardPos.y, board))
+							if (selectedWhitePiece->move(boardPos.x, boardPos.y, board, 0))
 								currentPlayer = Player::BLACK;
+							if (board.isKingInCheck("white"))
+							{
+								if (!board.testAllLegalMoves("white"))
+								{
+									std::cout << "Black won" << std::endl;
+									addLogMessage("White Won !");
+									break;
+								}
+							}
+							if (!board.testAllLegalMoves("black"))
+							{
+								std::cout << "Pat" << std::endl;
+								addLogMessage("Pat !");
+								break;
+							}
 							selectedWhitePiece = nullptr;
 						}
 					}
@@ -260,8 +321,23 @@ int main() {
 						}
 						else
 						{
-							if (selectedBlackPiece->move(boardPos.x, boardPos.y, board))
+							if (selectedBlackPiece->move(boardPos.x, boardPos.y, board, 0))
 								currentPlayer = Player::WHITE;
+							if (board.isKingInCheck("black"))
+							{
+								if (!board.testAllLegalMoves("black"))
+								{
+									std::cout << "White won" << std::endl;
+									addLogMessage("White Won !");
+									break;
+								}
+							}
+							if (!board.testAllLegalMoves("black"))
+							{
+								std::cout << "Pat" << std::endl;
+								addLogMessage("Pat !");
+								break;
+							}
 							selectedBlackPiece = nullptr;
 						}
 					}
@@ -271,6 +347,14 @@ int main() {
 
 		window.clear();
         drawBoardAndPieces(window, &board);
+
+		drawLogBackground(window);
+		sf::RectangleShape line(sf::Vector2f(2, 8 * TILE_SIZE));
+        line.setPosition(8 * TILE_SIZE, 0);
+        line.setFillColor(sf::Color(150, 150, 150));
+        window.draw(line);
+		drawLogMessages(window);
+
         window.display();
 	}
     return 0;
