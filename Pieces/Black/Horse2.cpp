@@ -26,11 +26,7 @@ Horse2 &Horse2::operator= (const Horse2 &horse)
 
 int *Horse2::getPos(void)
 {
-    int ret[2];
-
-    ret[0] = this->_pos_x;
-    ret[1] = this->_pos_y;
-
+    int *ret= NULL;
     return (ret);
 }
 

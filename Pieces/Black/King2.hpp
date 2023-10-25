@@ -4,8 +4,8 @@
 
 # include <iostream>
 # include <string>
-# include "APieces2.hpp"
-# include "../Board/Board.hpp"
+# include "../APieces2.hpp"
+# include "../../Board/Board.hpp"
 
 class	King2 : public APieces2
 {

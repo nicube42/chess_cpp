@@ -1,13 +1,13 @@
-#ifndef BISHOP2_HPP
+#ifndef BISHOP_HPP
 
-# define BISHOP2_HPP
+# define BISHOP_HPP
 
 # include <iostream>
 # include <string>
-# include "APieces2.hpp"
-# include "../Board/Board.hpp"
+# include "../APieces.hpp"
+# include "../../Board/Board.hpp"
 
-class	Bishop2 : public APieces2
+class	Bishop : public APieces
 {
 	private:
 		std::string			_type;
@@ -18,13 +18,13 @@ class	Bishop2 : public APieces2
         int					_pos_y;
         
 	public:
-		Bishop2(void);
-        Bishop2(int x, int y, Board &board, int id);
-        Bishop2(const Bishop2 &bishop);
+		Bishop(void);
+        Bishop(int x, int y, Board &board, int id);
+        Bishop(const Bishop &bishop);
 
-        ~Bishop2(void);
+        ~Bishop(void);
 
-        Bishop2 &operator= (const Bishop2 &bishop);
+        Bishop &operator= (const Bishop &bishop);
 
         int			*getPos(void);
         std::string getType(void);
@@ -33,6 +33,8 @@ class	Bishop2 : public APieces2
         int   		move(int x, int y, Board &board, int silence);
         bool     canAttack(int x, int y, Board &board);
         void        setPos(int x, int y);
+
+
 
 };
 

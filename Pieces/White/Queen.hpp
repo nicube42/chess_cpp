@@ -1,13 +1,13 @@
-#ifndef HORSE_HPP
+#ifndef QUEEN_HPP
 
-# define HORSE_HPP
+# define QUEEN_HPP
 
 # include <iostream>
 # include <string>
-# include "APieces.hpp"
-# include "../Board/Board.hpp"
+# include "../APieces.hpp"
+# include "../../Board/Board.hpp"
 
-class	Horse : public APieces
+class	Queen : public APieces
 {
 	private:
 		std::string			_type;
@@ -18,13 +18,13 @@ class	Horse : public APieces
         int					_pos_y;
         
 	public:
-		Horse(void);
-        Horse(int x, int y, Board &board, int id);
-        Horse(const Horse &horse);
+		Queen(void);
+        Queen(int x, int y, Board &board, int id);
+        Queen(const Queen &queen);
 
-        ~Horse(void);
+        ~Queen(void);
 
-        Horse &operator= (const Horse &rook);
+        Queen &operator= (const Queen &queen);
 
         int			*getPos(void);
         std::string getType(void);
@@ -33,7 +33,6 @@ class	Horse : public APieces
         int   		move(int x, int y, Board &board, int silence);
         bool     canAttack(int x, int y, Board &board);
         void        setPos(int x, int y);
-
 
 };
 

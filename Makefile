@@ -1,4 +1,20 @@
-SRC = main.cpp Pieces/Pawn.cpp Pieces/APieces.cpp Board/Board.cpp Pieces/APieces2.cpp Pieces/Pawn2.cpp Pieces/Rook.cpp Pieces/Rook2.cpp Pieces/Horse.cpp Pieces/Horse2.cpp Pieces/Bishop.cpp Pieces/Bishop2.cpp Pieces/Queen.cpp Pieces/Queen2.cpp Pieces/King.cpp Pieces/King2.cpp
+SRC = main.cpp \
+		Pieces/White/Pawn.cpp \
+		Pieces/APieces.cpp \
+		Board/Board.cpp \
+		Pieces/APieces2.cpp \
+		Pieces/Black/Pawn2.cpp \
+		Pieces/White/Rook.cpp \
+		Pieces/Black/Rook2.cpp \
+		Pieces/White/Horse.cpp \
+		Pieces/Black/Horse2.cpp \
+		Pieces/White/Bishop.cpp \
+		Pieces/Black/Bishop2.cpp \
+		Pieces/White/Queen.cpp \
+		Pieces/Black/Queen2.cpp \
+		Pieces/White/King.cpp \
+		Pieces/Black/King2.cpp
+
 OBJ = $(SRC:.cpp=.o)
 CC = g++
 RM = rm -f

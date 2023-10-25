@@ -1,13 +1,13 @@
-#ifndef QUEEN_HPP
+#ifndef QUEEN2_HPP
 
-# define QUEEN_HPP
+# define QUEEN2_HPP
 
 # include <iostream>
 # include <string>
-# include "APieces.hpp"
-# include "../Board/Board.hpp"
+# include "../APieces2.hpp"
+# include "../../Board/Board.hpp"
 
-class	Queen : public APieces
+class	Queen2 : public APieces2
 {
 	private:
 		std::string			_type;
@@ -18,13 +18,13 @@ class	Queen : public APieces
         int					_pos_y;
         
 	public:
-		Queen(void);
-        Queen(int x, int y, Board &board, int id);
-        Queen(const Queen &queen);
+		Queen2(void);
+        Queen2(int x, int y, Board &board, int id);
+        Queen2(const Queen2 &queen);
 
-        ~Queen(void);
+        ~Queen2(void);
 
-        Queen &operator= (const Queen &queen);
+        Queen2 &operator= (const Queen2 &queen);
 
         int			*getPos(void);
         std::string getType(void);

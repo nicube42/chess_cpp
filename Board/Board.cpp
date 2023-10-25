@@ -31,7 +31,7 @@ Board::Board(const Board &board)
 
 Board &Board::operator= (const Board &board)
 {
-
+    return (*this);
 }
 
 int    Board::setPiece(std::string type, int x, int y, APieces *piece, APieces2 *piece2)

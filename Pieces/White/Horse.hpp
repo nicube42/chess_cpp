@@ -1,13 +1,13 @@
-#ifndef ROOK2_HPP
+#ifndef HORSE_HPP
 
-# define ROOK2_HPP
+# define HORSE_HPP
 
 # include <iostream>
 # include <string>
-# include "APieces2.hpp"
-# include "../Board/Board.hpp"
+# include "../APieces.hpp"
+# include "../../Board/Board.hpp"
 
-class	Rook2 : public APieces2
+class	Horse : public APieces
 {
 	private:
 		std::string			_type;
@@ -18,13 +18,13 @@ class	Rook2 : public APieces2
         int					_pos_y;
         
 	public:
-		Rook2(void);
-        Rook2(int x, int y, Board &board, int id);
-        Rook2(const Rook2 &rook);
+		Horse(void);
+        Horse(int x, int y, Board &board, int id);
+        Horse(const Horse &horse);
 
-        ~Rook2(void);
+        ~Horse(void);
 
-        Rook2 &operator= (const Rook2 &rook);
+        Horse &operator= (const Horse &rook);
 
         int			*getPos(void);
         std::string getType(void);
@@ -33,6 +33,7 @@ class	Rook2 : public APieces2
         int   		move(int x, int y, Board &board, int silence);
         bool     canAttack(int x, int y, Board &board);
         void        setPos(int x, int y);
+
 
 };
 

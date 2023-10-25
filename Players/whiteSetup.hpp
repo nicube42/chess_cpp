@@ -1,10 +1,10 @@
 #include "../Pieces/APieces.hpp"
-#include "../Pieces/Pawn.hpp"
-#include "../Pieces/Rook.hpp"
-#include "../Pieces/Horse.hpp"
-#include "../Pieces/Bishop.hpp"
-#include "../Pieces/Queen.hpp"
-#include "../Pieces/King.hpp"
+#include "../Pieces/White/Pawn.hpp"
+#include "../Pieces/White/Rook.hpp"
+#include "../Pieces/White/Horse.hpp"
+#include "../Pieces/White/Bishop.hpp"
+#include "../Pieces/White/Queen.hpp"
+#include "../Pieces/White/King.hpp"
 
 struct WhiteBoardSetup
 {

@@ -1,13 +1,13 @@
-#ifndef KING_HPP
+#ifndef PAWN_HPP
 
-# define KING_HPP
+# define PAWN_HPP
 
 # include <iostream>
 # include <string>
-# include "APieces.hpp"
-# include "../Board/Board.hpp"
+# include "../APieces.hpp"
+# include "../../Board/Board.hpp"
 
-class	King : public APieces
+class	Pawn : public APieces
 {
 	private:
 		std::string			_type;
@@ -18,13 +18,13 @@ class	King : public APieces
         int					_pos_y;
         
 	public:
-		King(void);
-        King(int x, int y, Board &board, int id);
-        King(const King &king);
+		Pawn(void);
+        Pawn(int x, int y, Board &board, int id);
+        Pawn(const Pawn &pawn);
 
-        ~King(void);
+        ~Pawn(void);
 
-        King &operator= (const King &queen);
+        Pawn &operator= (const Pawn &cure);
 
         int			*getPos(void);
         std::string getType(void);
@@ -32,8 +32,8 @@ class	King : public APieces
         
         int   		move(int x, int y, Board &board, int silence);
         bool     canAttack(int x, int y, Board &board);
-        int         castle(int x, int y, Board &board);
         void        setPos(int x, int y);
+
 
 };
 

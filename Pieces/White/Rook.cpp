@@ -1,45 +1,41 @@
-#include "Rook2.hpp"
+#include "Rook.hpp"
 
-Rook2::Rook2(void) : _pos_x(0), _pos_y(0), _init_x(0), _init_y(0), _type("rook"), _id(0)
+Rook::Rook(void) : _pos_x(0), _pos_y(0), _init_x(0), _init_y(0), _type("rook"), _id(0)
 {
 
 }
 
-Rook2::Rook2(int x, int y, Board &board, int id) : _pos_x(x), _pos_y(y), _init_x(x), _init_y(y), _type("rook"), _id(id)
+Rook::Rook(int x, int y, Board &board, int id) : _pos_x(x), _pos_y(y), _init_x(x), _init_y(y), _type("rook"), _id(id)
 {
     std::cout << "Rook placed on board in position " << this->_pos_x << " " << this->_pos_y << std::endl;
-    board.setPiece(this->_type, x, y, 0, this);
+    board.setPiece(this->_type, x, y, this, 0);
     board.showBoard();
 }
-Rook2::Rook2(const Rook2 &rook) : _pos_x(rook._pos_x), _pos_y(rook._pos_y), _init_x(rook._pos_x), _init_y(rook._pos_x), _type(rook._type), _id(rook._id)
+Rook::Rook(const Rook &rook) : _pos_x(rook._pos_x), _pos_y(rook._pos_y), _init_x(rook._pos_x), _init_y(rook._pos_x), _type(rook._type), _id(rook._id)
 {
 }
 
-Rook2::~Rook2(void)
+Rook::~Rook(void)
 {
 }
 
-Rook2 &Rook2::operator= (const Rook2 &rook)
+Rook &Rook::operator= (const Rook &rook)
 {
     return (*this);
 }
 
-int *Rook2::getPos(void)
+int *Rook::getPos(void)
 {
-    int ret[2];
-
-    ret[0] = this->_pos_x;
-    ret[1] = this->_pos_y;
-
+    int *ret= NULL;
     return (ret);
 }
 
-int Rook2::move(int x, int y, Board &board, int silence)
+int Rook::move(int x, int y, Board &board, int silence)
 {
-    bool validMove = true;
-
     if (this->_pos_x == x && this->_pos_y == y)
         return 0;
+
+    bool validMove = true;
 
     // If moving horizontally (along a rank)
     if(this->_pos_y == y) 
@@ -50,7 +46,7 @@ int Rook2::move(int x, int y, Board &board, int silence)
             if(board.isTaken(i, y) != 0)
             {
                 validMove = false;
-                if (i == y && board.isTaken(x, i) == 1)
+                if (i == y && board.isTaken(x, i) == 2)
                     validMove = true;
                 break;
             }
@@ -65,7 +61,7 @@ int Rook2::move(int x, int y, Board &board, int silence)
             if(board.isTaken(x, i) != 0)
             {
                 validMove = false;
-                if (i == y && board.isTaken(x, i) == 1)
+                if (i == y && board.isTaken(x, i) == 2)
                     validMove = true;
                 break;
             }
@@ -76,23 +72,21 @@ int Rook2::move(int x, int y, Board &board, int silence)
         validMove = false;
     }
 
-    if (board.isTaken(x, y) == 2)
+    if (board.isTaken(x, y) == 1)
         validMove = false;
 
     if(validMove)
     {
-        if (board.isTaken(x, y) == 1)
-            board.removePiece("", x, y);
-        if(board.setPiece(this->_type, x, y, 0, this))
+        if(board.setPiece(this->_type, x, y, this, nullptr))
         {
             board.removePiece(this->_type, this->_pos_x, this->_pos_y);
             int oldX = this->_pos_x, oldY = this->_pos_y;
             this->_pos_x = x;
             this->_pos_y = y;
-            if(board.isKingInCheck("black"))
+            if(board.isKingInCheck("white"))
             {
                 board.removePiece(this->_type, x, y);
-                board.setPiece(this->_type, oldX, oldY, 0, this);
+                board.setPiece(this->_type, oldX, oldY, this, 0);
                 this->_pos_x = oldX;
                 this->_pos_y = oldY;
                 std::cout << "King in check" << std::endl;
@@ -122,16 +116,16 @@ int Rook2::move(int x, int y, Board &board, int silence)
 }
 
 
-std::string Rook2::getType(void)
+std::string Rook::getType(void)
 {
     return (this->_type);
 }
-int Rook2::getId(void)
+int Rook::getId(void)
 {
     return (this->_id);
 }
 
-bool Rook2::canAttack(int x, int y, Board &board) {
+bool Rook::canAttack(int x, int y, Board &board) {
     // Check if it's not on the same row or column
     if (this->_pos_x != x && this->_pos_y != y) {
         return false;
@@ -154,7 +148,7 @@ bool Rook2::canAttack(int x, int y, Board &board) {
     return true;
 }
 
-void        Rook2::setPos(int x, int y)
+void        Rook::setPos(int x, int y)
 {
     this->_pos_x = x;
     this->_pos_y = y;

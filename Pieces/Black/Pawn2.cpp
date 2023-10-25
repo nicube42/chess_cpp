@@ -26,11 +26,7 @@ Pawn2 &Pawn2::operator= (const Pawn2 &pawn)
 
 int *Pawn2::getPos(void)
 {
-    int ret[2];
-
-    ret[0] = this->_pos_x;
-    ret[1] = this->_pos_y;
-
+    int *ret= NULL;
     return (ret);
 }
 

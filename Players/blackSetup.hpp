@@ -1,10 +1,10 @@
 #include "../Pieces/APieces2.hpp"
-#include "../Pieces/Pawn2.hpp"
-#include "../Pieces/Rook2.hpp"
-#include "../Pieces/Horse2.hpp"
-#include "../Pieces/Bishop2.hpp"
-#include "../Pieces/Queen2.hpp"
-#include "../Pieces/King2.hpp"
+#include "../Pieces/Black/Pawn2.hpp"
+#include "../Pieces/Black/Rook2.hpp"
+#include "../Pieces/Black/Horse2.hpp"
+#include "../Pieces/Black/Bishop2.hpp"
+#include "../Pieces/Black/Queen2.hpp"
+#include "../Pieces/Black/King2.hpp"
 
 struct BlackBoardSetup
 {

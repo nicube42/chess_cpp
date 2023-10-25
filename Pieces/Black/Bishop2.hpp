@@ -1,13 +1,13 @@
-#ifndef PAWN_HPP
+#ifndef BISHOP2_HPP
 
-# define PAWN_HPP
+# define BISHOP2_HPP
 
 # include <iostream>
 # include <string>
-# include "APieces.hpp"
-# include "../Board/Board.hpp"
+# include "../APieces2.hpp"
+# include "../../Board/Board.hpp"
 
-class	Pawn : public APieces
+class	Bishop2 : public APieces2
 {
 	private:
 		std::string			_type;
@@ -18,13 +18,13 @@ class	Pawn : public APieces
         int					_pos_y;
         
 	public:
-		Pawn(void);
-        Pawn(int x, int y, Board &board, int id);
-        Pawn(const Pawn &pawn);
+		Bishop2(void);
+        Bishop2(int x, int y, Board &board, int id);
+        Bishop2(const Bishop2 &bishop);
 
-        ~Pawn(void);
+        ~Bishop2(void);
 
-        Pawn &operator= (const Pawn &cure);
+        Bishop2 &operator= (const Bishop2 &bishop);
 
         int			*getPos(void);
         std::string getType(void);
@@ -33,7 +33,6 @@ class	Pawn : public APieces
         int   		move(int x, int y, Board &board, int silence);
         bool     canAttack(int x, int y, Board &board);
         void        setPos(int x, int y);
-
 
 };
 
