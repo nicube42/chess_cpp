@@ -1,0 +1,59 @@
+void	first_player(WhiteBoardSetup *white, Board *board, int turn)
+{
+	int	x = -1, y = -1;
+
+	do
+	{
+	std::cout << std::endl << "Turn " << turn <<" of player 1 " << std::endl;
+	std::cout << "Enter x coordinate of the piece you want to play(0-7): ";
+	std::cin >> x;
+	std::cout << "Enter y coordinate of the piece you want to play(0-7): ";
+	std::cin >> y;
+	} while (!(board->isTaken(x, y)));
+	APieces	*ret = board->getTypeW(x, y);
+	do
+	{
+	std::cout << "Enter x coordinate of the new position(0-7): ";
+	std::cin >> x;
+	std::cout << "Enter y coordinate of the new position(0-7): ";
+	std::cin >> y;
+	} while (!(ret->move(x, y, *board)));
+}
+
+void	second_player(BlackBoardSetup *black, Board *board, int turn)
+{
+	int	x = 0, y = 0;
+
+	do
+	{
+	std::cout << std::endl << "Turn " << turn <<" of player 2 " << std::endl;
+	std::cout << "Enter x coordinate of the piece you want to play(0-7): ";
+	std::cin >> x;
+	std::cout << "Enter y coordinate of the piece you want to play(0-7): ";
+	std::cin >> y;
+	} while (!(board->isTaken(x, y)));
+	APieces2	*ret = board->getTypeB(x, y);
+	do
+	{
+	std::cout << "Enter x coordinate of the new position(0-7): ";
+	std::cin >> x;
+	std::cout << "Enter y coordinate of the new position(0-7): ";
+	std::cin >> y;
+	} while (!(ret->move(x, y, *board)));
+}
+
+int	main(void)
+{
+	Board			board;
+	WhiteBoardSetup	white(&board);
+	BlackBoardSetup	black(&board);
+	int				turn = 0;
+
+	while (true)
+	{
+		turn++;
+		first_player(&white, &board, turn);
+		second_player(&black, &board, turn);
+	}
+	return (0);
+}
